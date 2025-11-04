@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../../components/Navbar';
-import Sidebar from '../../components/Sidebar';
-import Footer from '../../components/Footer';
 import { auth } from '../../lib/auth';
 import type { Student } from '../../types/student';
 
 const StudentCourses: React.FC = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [_sidebarOpen, _setSidebarOpen] = useState(false);
+  const [_user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState<Student | null>(null);
 
@@ -50,14 +47,7 @@ const StudentCourses: React.FC = () => {
     fetchUserData();
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      await auth.logout();
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+  // Note: handleLogout is passed through Layout component
 
   // Mock courses data
   const courses = [
@@ -87,77 +77,54 @@ const StudentCourses: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar user={user} onLogout={handleLogout} />
-        <main className="flex-grow flex items-center justify-center">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-            <p>Loading courses...</p>
-          </div>
-        </main>
-        <Footer />
+      <div className="flex flex-1 items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+          <p>Loading courses...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isAdmin={false} />
+    <>
+      <h1 className="text-2xl font-bold mb-6">My Courses - {student?.name || 'Loading...'}</h1>
       
-      <div className="flex-grow flex flex-col">
-        <Navbar user={user} onLogout={handleLogout} />
-        
-        <main className="flex-grow p-4 md:p-6">
-          <div className="md:hidden p-4">
-            <button 
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="bg-blue-600 text-white p-2 rounded-md"
-            >
-              {sidebarOpen ? 'Close Menu' : 'Open Menu'}
-            </button>
-          </div>
-          
-          <h1 className="text-2xl font-bold mb-6">My Courses - {student?.name || 'Loading...'}</h1>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course) => (
-              <div key={course.id} className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
-                <p className="text-gray-600 mb-4">{course.description}</p>
-                <div className="mb-4">
-                  <p className="text-sm text-gray-500">Instructor: {course.instructor}</p>
-                  <p className="text-sm text-gray-500">Duration: {course.duration}</p>
-                </div>
-                
-                <div className="mb-4">
-                  <div className="flex justify-between text-sm mb-1">
-                    <span>Progress</span>
-                    <span>{course.progress}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5">
-                    <div 
-                      className="bg-blue-600 h-2.5 rounded-full" 
-                      style={{ width: `${course.progress}%` }}
-                    ></div>
-                  </div>
-                </div>
-                
-                <div className="flex space-x-2">
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm">
-                    Continue
-                  </button>
-                  <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-100 transition-colors text-sm">
-                    Syllabus
-                  </button>
-                </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {courses.map((course) => (
+          <div key={course.id} className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
+            <p className="text-gray-600 mb-4">{course.description}</p>
+            <div className="mb-4">
+              <p className="text-sm text-gray-500">Instructor: {course.instructor}</p>
+              <p className="text-sm text-gray-500">Duration: {course.duration}</p>
+            </div>
+            
+            <div className="mb-4">
+              <div className="flex justify-between text-sm mb-1">
+                <span>Progress</span>
+                <span>{course.progress}%</span>
               </div>
-            ))}
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div 
+                  className="bg-blue-600 h-2.5 rounded-full" 
+                  style={{ width: `${course.progress}%` }}
+                ></div>
+              </div>
+            </div>
+            
+            <div className="flex space-x-2">
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm">
+                Continue
+              </button>
+              <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-100 transition-colors text-sm">
+                Syllabus
+              </button>
+            </div>
           </div>
-        </main>
-
-        <Footer />
+        ))}
       </div>
-    </div>
+    </>
   );
 };
 

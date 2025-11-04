@@ -10,7 +10,7 @@ import Login from '../pages/Login';
 import StudentDashboard from '../pages/StudentDashboard';
 import AdminDashboard from '../pages/AdminDashboard';
 import PublicLayout from '../layouts/PublicLayout';
-import AdminLayout from '../layouts/AdminLayout';
+import Layout from '../components/Layout';
 
 // Import new admin pages
 import Students from '../pages/admin/Students';
@@ -50,6 +50,16 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean 
     checkAuth();
   }, []);
 
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      await auth.logout();
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   // Show loading while checking auth status
   if (loading) {
     return (
@@ -77,11 +87,31 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean 
   
   // If adminOnly is true, check if user is admin
   if (adminOnly && user) {
-    // In a real app, you would check user role here
-    // For now, we'll assume any logged in user can access admin routes
+    const isAdmin = user.email === 'admin@example.com';
+    if (!isAdmin) {
+      // Redirect non-admin users away from admin routes
+      React.useEffect(() => {
+        const timer = setTimeout(() => {
+          window.location.href = '/student'; // Redirect non-admins to student dashboard
+        }, 1000);
+        return () => clearTimeout(timer);
+      }, []);
+      
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div>Access denied. Redirecting to student dashboard...</div>
+        </div>
+      );
+    }
   }
   
-  return <>{children}</>;
+  // Render children with Layout wrapper
+  const isAdmin = user?.email === 'admin@example.com';
+  return (
+    <Layout user={user} onLogout={handleLogout} isAdmin={isAdmin}>
+      {children}
+    </Layout>
+  );
 };
 
 const AppRouter: React.FC = () => {
@@ -123,85 +153,63 @@ const AppRouter: React.FC = () => {
         {/* Student Dashboard */}
         <Route path="/student" element={
           <ProtectedRoute>
-            <AdminLayout>
-              <StudentDashboard />
-            </AdminLayout>
+            <StudentDashboard />
           </ProtectedRoute>
         } />
         
         {/* Student-specific routes */}
         <Route path="/student/courses" element={
           <ProtectedRoute>
-            <AdminLayout>
-              <StudentCourses />
-            </AdminLayout>
+            <StudentCourses />
           </ProtectedRoute>
         } />
         <Route path="/student/attendance" element={
           <ProtectedRoute>
-            <AdminLayout>
-              <StudentAttendance />
-            </AdminLayout>
+            <StudentAttendance />
           </ProtectedRoute>
         } />
         <Route path="/student/results" element={
           <ProtectedRoute>
-            <AdminLayout>
-              <StudentResults />
-            </AdminLayout>
+            <StudentResults />
           </ProtectedRoute>
         } />
         <Route path="/student/profile" element={
           <ProtectedRoute>
-            <AdminLayout>
-              <StudentProfile />
-            </AdminLayout>
+            <StudentProfile />
           </ProtectedRoute>
         } />
         
         {/* Admin Dashboard */}
         <Route path="/admin" element={
           <ProtectedRoute adminOnly={true}>
-            <AdminLayout>
-              <AdminDashboard />
-            </AdminLayout>
+            <AdminDashboard />
           </ProtectedRoute>
         } />
         
         {/* Admin-specific routes */}
         <Route path="/admin/students" element={
           <ProtectedRoute adminOnly={true}>
-            <AdminLayout>
-              <Students />
-            </AdminLayout>
+            <Students />
           </ProtectedRoute>
         } />
         <Route path="/admin/courses" element={
           <ProtectedRoute adminOnly={true}>
-            <AdminLayout>
-              <CoursesPage />
-            </AdminLayout>
+            <CoursesPage />
           </ProtectedRoute>
         } />
         <Route path="/admin/batches" element={
           <ProtectedRoute adminOnly={true}>
-            <AdminLayout>
-              <Batches />
-            </AdminLayout>
+            <Batches />
           </ProtectedRoute>
         } />
         <Route path="/admin/attendance" element={
           <ProtectedRoute adminOnly={true}>
-            <AdminLayout>
-              <Attendance />
-            </AdminLayout>
+            <Attendance />
           </ProtectedRoute>
         } />
         <Route path="/admin/results" element={
           <ProtectedRoute adminOnly={true}>
-            <AdminLayout>
-              <Results />
-            </AdminLayout>
+            <Results />
           </ProtectedRoute>
         } />
       </Routes>

@@ -1,7 +1,18 @@
 import React from 'react';
 
+interface User {
+  id?: string;
+  email?: string;
+  name?: string;
+  user_metadata?: {
+    name?: string;
+  };
+  role?: string;
+  [key: string]: any; // Allow other properties
+}
+
 interface NavbarProps {
-  user?: { name: string; role?: string };
+  user?: User;
   onLogout?: () => void;
   isAdmin?: boolean;
 }
@@ -18,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout, isAdmin = false }) => {
         <div className="flex items-center space-x-4">
           {user ? (
             <>
-              <span>Hi, {user.name}!</span>
+              <span>Hi, {user.name || user.user_metadata?.name || user.email || 'User'}!</span>
               {isAdmin && (
                 <a href="/admin" className="text-white hover:underline">Admin</a>
               )}

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../../components/Navbar';
-import Sidebar from '../../components/Sidebar';
 import StudentForm from '../../features/students/StudentForm';
 import StudentList from '../../features/students/StudentList';
 import type { Student } from '../../types/student';
@@ -8,8 +6,8 @@ import { auth } from '../../lib/auth';
 import studentService from '../../features/students/studentService';
 
 const Students: React.FC = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [_sidebarOpen, _setSidebarOpen] = useState(false);
+  const [_user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [currentStudent, setCurrentStudent] = useState<Student | null>(null);
@@ -45,14 +43,7 @@ const Students: React.FC = () => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await auth.logout();
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+  // Note: handleLogout is passed through Layout component
 
   const handleSaveStudent = async (_student: Student) => {
     setShowForm(false);
@@ -84,65 +75,44 @@ const Students: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar user={user} onLogout={handleLogout} isAdmin={true} />
-        <main className="flex-grow flex items-center justify-center">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-            <p>Loading students...</p>
-          </div>
-        </main>
+      <div className="flex flex-1 items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+          <p>Loading students...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} isAdmin={true} />
-      
-      <div className="flex-grow flex flex-col">
-        <Navbar user={user} onLogout={handleLogout} isAdmin={true} />
-        
-        <main className="flex-grow p-4 md:p-6">
-          <div className="md:hidden p-4">
-            <button 
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="bg-blue-600 text-white p-2 rounded-md"
-            >
-              {sidebarOpen ? 'Close Menu' : 'Open Menu'}
-            </button>
-          </div>
-          
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold">Students Management</h1>
-            <button
-              onClick={handleAddStudent}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-            >
-              Add New Student
-            </button>
-          </div>
-
-          {showForm ? (
-            <StudentForm 
-              student={currentStudent || undefined} 
-              onSave={handleSaveStudent} 
-              onCancel={() => {
-                setShowForm(false);
-                setCurrentStudent(null);
-              }} 
-            />
-          ) : (
-            <StudentList 
-              students={students} 
-              onEdit={handleEditStudent} 
-              onDelete={handleDeleteStudent} 
-            />
-          )}
-        </main>
-
+    <>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Students Management</h1>
+        <button
+          onClick={handleAddStudent}
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+        >
+          Add New Student
+        </button>
       </div>
-    </div>
+
+      {showForm ? (
+        <StudentForm 
+          student={currentStudent || undefined} 
+          onSave={handleSaveStudent} 
+          onCancel={() => {
+            setShowForm(false);
+            setCurrentStudent(null);
+          }} 
+        />
+      ) : (
+        <StudentList 
+          students={students} 
+          onEdit={handleEditStudent} 
+          onDelete={handleDeleteStudent} 
+        />
+      )}
+    </>
   );
 };
 

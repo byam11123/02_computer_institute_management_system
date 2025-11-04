@@ -65,6 +65,14 @@ export const auth = {
   // Get current user
   async getCurrentUser() {
     const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      // Determine role based on email for mock implementation
+      const role = user.email === 'admin@example.com' ? 'admin' : 'student';
+      return {
+        ...user,
+        role
+      };
+    }
     return user;
   },
 

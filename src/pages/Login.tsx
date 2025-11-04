@@ -67,9 +67,14 @@ const Login: React.FC = () => {
         password: formData.password
       });
       
-      // Redirect based on user role (simplified for this example)
-      // In a real app, you would check user's role from profile
-      window.location.href = '/student';
+      // Redirect based on user role after login
+      const currentUser = await auth.getCurrentUser();
+      if (currentUser && currentUser.email === 'admin@example.com') {
+        window.location.href = '/admin';
+      } else {
+        // Default to student dashboard for students and other users
+        window.location.href = '/student';
+      }
     } catch (error: any) {
       setLoginError(error.message || 'Failed to login. Please check your credentials.');
     } finally {
