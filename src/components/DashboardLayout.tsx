@@ -13,27 +13,21 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, user, onLog
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      <Header 
-        user={user} 
-        onLogout={onLogout} 
-        onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-        sidebarOpen={sidebarOpen}
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
+      <Sidebar 
+        isOpen={sidebarOpen} 
+        onClose={() => setSidebarOpen(false)} 
+        isAdmin={isAdmin} 
       />
-
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar 
-          isOpen={sidebarOpen} 
-          onClose={() => setSidebarOpen(false)} 
-          isAdmin={isAdmin} 
+      <div className="flex-1 flex flex-col min-w-0">
+        <Header 
+          user={user} 
+          onLogout={onLogout} 
+          onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+          sidebarOpen={sidebarOpen}
         />
-
-        {/* Main Content Area */}
-        <main className={`flex-grow p-4 md:p-6 transition-all duration-300 ${
-          sidebarOpen ? 'md:ml-64' : 'ml-0'
-        }`}>
-          <div className="md:hidden p-4"></div> {/* Space for mobile header */}
-          <div className="max-w-full">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 md:p-6">
+          <div className="max-w-7xl mx-auto">
             {children}
           </div>
         </main>

@@ -99,7 +99,7 @@ const StudentProfile: React.FC = () => {
             <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
+              <div className="mb-4 px-4 md:px-0">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                   Full Name
                 </label>
@@ -109,11 +109,11 @@ const StudentProfile: React.FC = () => {
                   type="text"
                   value={formData?.name || ''}
                   onChange={handleChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-sm md:text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               
-              <div>
+              <div className="mb-4 px-4 md:px-0">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                   Email Address
                 </label>
@@ -123,12 +123,12 @@ const StudentProfile: React.FC = () => {
                   type="email"
                   value={formData?.email || ''}
                   onChange={handleChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-sm md:text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   readOnly // Email typically shouldn't be changed
                 />
               </div>
               
-              <div>
+              <div className="mb-4 px-4 md:px-0">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
                   Phone Number
                 </label>
@@ -138,11 +138,11 @@ const StudentProfile: React.FC = () => {
                   type="tel"
                   value={formData?.phone || ''}
                   onChange={handleChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-sm md:text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               
-              <div>
+              <div className="mb-4 px-4 md:px-0">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date_of_birth">
                   Date of Birth
                 </label>
@@ -152,11 +152,11 @@ const StudentProfile: React.FC = () => {
                   type="date"
                   value={formData?.date_of_birth.split('T')[0] || ''}
                   onChange={handleChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-sm md:text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               
-              <div className="md:col-span-2">
+              <div className="md:col-span-2 mb-4 px-4 md:px-0">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">
                   Address
                 </label>
@@ -166,11 +166,11 @@ const StudentProfile: React.FC = () => {
                   value={formData?.address || ''}
                   onChange={handleChange}
                   rows={3}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-sm md:text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 ></textarea>
               </div>
               
-              <div>
+              <div className="mb-4 px-4 md:px-0">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="enrollment_date">
                   Enrollment Date
                 </label>
@@ -180,12 +180,12 @@ const StudentProfile: React.FC = () => {
                   type="date"
                   value={formData?.enrollment_date.split('T')[0] || ''}
                   onChange={handleChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-sm md:text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   readOnly // Enrollment date typically shouldn't be changed
                 />
               </div>
               
-              <div>
+              <div className="mb-4 px-4 md:px-0">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="course_id">
                   Course
                 </label>
@@ -195,7 +195,7 @@ const StudentProfile: React.FC = () => {
                   type="text"
                   value={formData?.course_id || ''}
                   onChange={handleChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-sm md:text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   readOnly // Course typically shouldn't be changed by student
                 />
               </div>

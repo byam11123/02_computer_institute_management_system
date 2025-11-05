@@ -90,14 +90,32 @@ const StudentCourses: React.FC = () => {
     <>
       <h1 className="text-2xl font-bold mb-6">My Courses - {student?.name || 'Loading...'}</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="space-y-4 md:space-y-6">
         {courses.map((course) => (
-          <div key={course.id} className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
-            <p className="text-gray-600 mb-4">{course.description}</p>
+          <div key={course.id} className="bg-white rounded-lg shadow p-4 md:p-6">
+            <h2 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">{course.title}</h2>
+            <p className="text-sm md:text-base text-gray-600 mb-4">{course.description}</p>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-4 text-sm">
+              <div className="text-gray-700">
+                <span className="font-semibold">Instructor:</span> {course.instructor}
+              </div>
+              <div className="text-gray-700">
+                <span className="font-semibold">Duration:</span> {course.duration}
+              </div>
+            </div>
+            
             <div className="mb-4">
-              <p className="text-sm text-gray-500">Instructor: {course.instructor}</p>
-              <p className="text-sm text-gray-500">Duration: {course.duration}</p>
+              <div className="flex justify-between text-sm mb-1">
+                <span>Progress</span>
+                <span>{course.progress}%</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div 
+                  className="bg-blue-600 h-2.5 rounded-full" 
+                  style={{ width: `${course.progress}%` }}
+                ></div>
+              </div>
             </div>
             
             <div className="mb-4">

@@ -93,20 +93,20 @@ const StudentDashboard: React.FC = () => {
         </div>
       )}
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div className="bg-blue-100 rounded-lg p-6 text-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
+        <div className="bg-blue-100 rounded-lg p-4 md:p-6 text-center">
           <h3 className="text-lg font-semibold mb-2">Attendance</h3>
           <p className="text-3xl font-bold text-blue-700">92%</p>
           <p className="text-sm text-gray-600 mt-2">Current attendance rate</p>
         </div>
         
-        <div className="bg-green-100 rounded-lg p-6 text-center">
+        <div className="bg-green-100 rounded-lg p-4 md:p-6 text-center">
           <h3 className="text-lg font-semibold mb-2">Courses</h3>
           <p className="text-3xl font-bold text-green-700">2</p>
           <p className="text-sm text-gray-600 mt-2">Active courses</p>
         </div>
         
-        <div className="bg-yellow-100 rounded-lg p-6 text-center">
+        <div className="bg-yellow-100 rounded-lg p-4 md:p-6 text-center">
           <h3 className="text-lg font-semibold mb-2">Results</h3>
           <p className="text-3xl font-bold text-yellow-700">A+</p>
           <p className="text-sm text-gray-600 mt-2">Latest grade</p>

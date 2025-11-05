@@ -36,9 +36,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isAdmin = false }) =
 
       {/* Sidebar */}
       <aside 
-        className={`fixed top-16 h-full w-64 bg-gray-800 text-white z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 w-64 bg-gray-800 text-white z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 md:static md:top-0 md:h-auto`}
+        } md:translate-x-0 md:static md:w-64 overflow-y-auto`}
       >
         <div className="p-4 border-b border-gray-700">
           <h2 className="text-xl font-bold">

@@ -109,3 +109,34 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Additional responsive table utilities */
+@media (max-width: 640px) {
+  table {
+    font-size: 0.875rem;
+  }
+  
+  th, td {
+    padding: 0.5rem 0.75rem !important;
+  }
+}
+
+/* Prevent text from breaking layout */
+.truncate-mobile {
+  @apply sm:truncate;
+}
+
+/* Better touch targets on mobile */
+@media (max-width: 768px) {
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Smoother scrolling on mobile */
+@media (max-width: 768px) {
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
