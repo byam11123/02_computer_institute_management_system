@@ -10,7 +10,7 @@ import Login from '../pages/Login';
 import StudentDashboard from '../pages/StudentDashboard';
 import AdminDashboard from '../pages/AdminDashboard';
 import PublicLayout from '../layouts/PublicLayout';
-import Layout from '../components/Layout';
+import DashboardLayout from '../components/DashboardLayout';
 
 // Import new admin pages
 import Students from '../pages/admin/Students';
@@ -105,12 +105,12 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean 
     }
   }
   
-  // Render children with Layout wrapper
+  // Render children with DashboardLayout wrapper
   const isAdmin = user?.email === 'admin@example.com';
   return (
-    <Layout user={user} onLogout={handleLogout} isAdmin={isAdmin}>
+    <DashboardLayout user={user} onLogout={handleLogout} isAdmin={isAdmin}>
       {children}
-    </Layout>
+    </DashboardLayout>
   );
 };
 
